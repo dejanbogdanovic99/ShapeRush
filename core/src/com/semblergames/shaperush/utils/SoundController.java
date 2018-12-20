@@ -33,26 +33,26 @@ public class SoundController {
         this.range = range;
     }
 
-    public void play(int index){
-        sounds[index].play();
-    }
-
-    public void play(int index, float x, float y, float camX, float camY){
-        float distance = Vector2.dst(x,y,camX,camY);
-        float volume = 1;
-        if(distance != 0){
-            if(distance >= range) {
-                volume = 0;
-            }else{
-                volume = Math.min(1/distance,1);
+    public void play(int index, float x, float y, float camX, float camY, float masterVolume){
+        if(masterVolume > 0) {
+            float distance = Vector2.dst(x, y, camX, camY);
+            float volume = 1;
+            if (distance != 0) {
+                if (distance >= range) {
+                    volume = 0;
+                } else {
+                    volume = Math.min(1 / distance, 1);
+                }
             }
+            float pan = MathUtils.clamp((x - camX) / range, -1, 1);
+            sounds[index].play(masterVolume * volume, 1, pan);
         }
-        float pan = MathUtils.clamp((x - camX)/range,-1,1);
-        sounds[index].play(volume,1,pan);
     }
 
-    public void play(int index,float volume, float pan){
-        sounds[index].play(volume, 1, pan);
+    public void play(int index,float volume, float pan, float masterVolume){
+        if(masterVolume > 0) {
+            sounds[index].play(masterVolume * volume, 1, pan);
+        }
     }
 
 }

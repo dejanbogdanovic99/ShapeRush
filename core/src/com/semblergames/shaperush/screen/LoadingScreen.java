@@ -1,34 +1,29 @@
 package com.semblergames.shaperush.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.semblergames.shaperush.animation.Animation;
+import com.semblergames.shaperush.animation.FrameAnimController;
+import com.semblergames.shaperush.animation.FrameAnimation;
+import com.semblergames.shaperush.animation.RotAnimController;
+import com.semblergames.shaperush.animation.RotationAnimation;
+import com.semblergames.shaperush.animation.ScaleAnimation;
+import com.semblergames.shaperush.animation.SclAnimController;
+import com.semblergames.shaperush.animation.ShakeAnimation;
+import com.semblergames.shaperush.animation.ShkAnimController;
 import com.semblergames.shaperush.game.Gate;
-import com.semblergames.shaperush.utils.AnimationController;
+import com.semblergames.shaperush.animation.AnimationController;
 import com.semblergames.shaperush.utils.SoundController;
 import com.semblergames.shaperush.utils.graphics.ColorShader;
 
@@ -55,11 +50,14 @@ public class LoadingScreen extends Screen{
     Texture [] t2;
 
 
-    Animation[] an;
+    FrameAnimation[] an;
 
     Sound [] so;
 
-    AnimationController<Texture> animationController;
+    FrameAnimController<Texture> animationController;
+    RotAnimController rotAnimController;
+    SclAnimController sclAnimController;
+    ShkAnimController shkAnimController;
     SoundController soundController;
 
     InputProcessor inputProcessor;
@@ -78,19 +76,41 @@ public class LoadingScreen extends Screen{
 
         t1 = new Texture[3];
         t2 = new Texture[2];
-        t1[0] = new Texture("Untitled.png");
+        t1[0] = new Texture("triangle.png");
         t1[1] = new Texture("gcircle.png");
         t1[2] = new Texture("rsquare.png");
         t2[0] = new Texture("triangle.png");
         t2[1] = new Texture("triangle1.png");
 
-        an = new Animation[2];
-        an[0] = new Animation<Texture>(0.5f,t1);
-        an[1] = new Animation<Texture>(0.5f,t2);
 
-        animationController = new AnimationController<Texture>(an);
-        animationController.changeAnimation(0);
-        animationController.shake(2);
+        an = new FrameAnimation[2];
+        an[0] = new FrameAnimation<Texture>(0.5f, t1,Animation.PlayMode.LOOP_PINGPONG);
+        an[1] = new FrameAnimation<Texture>(0.5f, t2);
+
+        final RotationAnimation [] rot = new RotationAnimation[1];
+
+        rot[0] = new RotationAnimation(0,360,1,RotationAnimation.TransitionType.SIN, Animation.PlayMode.LOOP_PINGPONG);
+
+
+        rotAnimController = new RotAnimController(rot);
+
+        final ScaleAnimation [] scl = new ScaleAnimation[1];
+
+        scl[0] = new ScaleAnimation(0.5f,1.5f,3,ScaleAnimation.TransitionType.LINEAR, Animation.PlayMode.LOOP);
+
+        sclAnimController = new SclAnimController(scl);
+
+
+        final ShakeAnimation [] shk = new ShakeAnimation[1];
+
+        shk[0] = new ShakeAnimation(3,10,1, ShakeAnimation.TransitionType.PEAK, Animation.PlayMode.NORMAL);
+
+        shkAnimController = new ShkAnimController(shk);
+
+
+        animationController = new FrameAnimController<Texture>();
+        animationController.setAnimations(an);
+        animationController.start();
 
         so = new Sound[2];
         so[0] = Gdx.audio.newSound(Gdx.files.internal("die.wav"));
@@ -101,7 +121,7 @@ public class LoadingScreen extends Screen{
         inputProcessor = new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
-                animationController.shake(1);
+                shkAnimController.restart();
                 return true;
             }
 
@@ -112,17 +132,12 @@ public class LoadingScreen extends Screen{
 
             @Override
             public boolean keyTyped(char character) {
-                if(animationController.isRunning()){
-                    animationController.pause();
-                }else{
-                    animationController.start();
-                }
                 return true;
             }
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                soundController.play(1,screenX, Gdx.graphics.getHeight()-screenY, Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+                soundController.play(1,screenX, Gdx.graphics.getHeight()-screenY, Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2,1);
                 return true;
             }
 
@@ -163,12 +178,16 @@ public class LoadingScreen extends Screen{
         ShaderProgram def = batch.getShader();
         batch.setShader(colorShader.getProgram());
         batch.begin();
-        batch.draw(animationController.getKeyFrame(), animationController.getOffsetX(), animationController.getOffsetX(),
-                animationController.getOffsetX() + animationController.getKeyFrame().getWidth()/2,
-                animationController.getOffsetY() + animationController.getKeyFrame().getHeight()/2,
+        float scale = sclAnimController.getScale();
+        float offestX = shkAnimController.getOffsetX();
+        float offsetY = shkAnimController.getOffsetY();
+        batch.draw(animationController.getKeyFrame(), offestX, offsetY,
+                offestX + animationController.getKeyFrame().getWidth()/2,
+                offsetY + animationController.getKeyFrame().getHeight()/2,
                 animationController.getKeyFrame().getWidth(),
-                animationController.getKeyFrame().getHeight(),1,1,
-                animationController.getAngle(),0,0, animationController.getKeyFrame().getWidth(),
+                animationController.getKeyFrame().getHeight(),
+                scale,scale,
+                rotAnimController.getAngle() + shkAnimController.getAngle(),0,0, animationController.getKeyFrame().getWidth(),
                 animationController.getKeyFrame().getHeight(),false,false);
 
         batch.end();
@@ -184,6 +203,9 @@ public class LoadingScreen extends Screen{
         super.update(delta);
         stage.act(delta);
         animationController.update(delta);
+        rotAnimController.update(delta);
+        sclAnimController.update(delta);
+        shkAnimController.update(delta);
     }
 
     @Override

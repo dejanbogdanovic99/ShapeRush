@@ -85,7 +85,7 @@ public abstract class Screen {
     /** @see ApplicationListener#resume() */
     public void resume(){}
 
-    /** Called when this screen should release all resources. */
+    /** Called when this screen should release all it`s resources. */
     public abstract void dispose();
 
 }

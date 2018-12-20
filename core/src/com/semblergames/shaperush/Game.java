@@ -12,7 +12,7 @@ public abstract class Game implements ApplicationListener {
 
     private HashMap<Integer,Screen> screens;
 
-    private int currentID;
+    protected int currentID;
     private Screen currentScreen;
 
 
