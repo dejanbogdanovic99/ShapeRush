@@ -8,6 +8,7 @@ public abstract class Animation {
         LOOP,
         LOOP_REVERSED,
         LOOP_PINGPONG
+
     }
 
     float duration;
@@ -28,8 +29,16 @@ public abstract class Animation {
         this.playMode = playMode;
     }
 
+    public void setDuration(float duration){
+        this.duration = duration;
+    }
+
     public boolean isFinished(float stateTime){
-        return stateTime > duration;
+        if(playMode == PlayMode.LOOP_PINGPONG){
+            return stateTime > 2*duration;
+        }else {
+            return stateTime > duration;
+        }
     }
 
     public float getDuration() {
@@ -39,4 +48,5 @@ public abstract class Animation {
     public PlayMode getPlayMode() {
         return playMode;
     }
+
 }

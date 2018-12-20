@@ -2,11 +2,9 @@ package com.semblergames.shaperush.animation;
 
 public class FrameAnimController<T> extends AnimationController <FrameAnimation<T>> {
 
-    public FrameAnimController(){
+    public FrameAnimController(){}
 
-    }
-
-    public FrameAnimController(FrameAnimation <T> [] animations){
+    public FrameAnimController(FrameAnimation<T> [] animations){
         this.animations = animations;
     }
 
@@ -19,11 +17,10 @@ public class FrameAnimController<T> extends AnimationController <FrameAnimation<
     }
 
     public float getFrameDuration(){
-        return animations[index].getFrameDuration();
+        return animations[index].frameDuration;
     }
 
     public void setFrameIndex(int index){
-        time = animations[this.index].getFrameDuration()*index;
+        time = animations[this.index].frameDuration*index;
     }
-
 }

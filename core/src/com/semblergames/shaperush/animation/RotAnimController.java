@@ -3,9 +3,7 @@ package com.semblergames.shaperush.animation;
 public class RotAnimController extends AnimationController <RotationAnimation>{
 
 
-    public RotAnimController(){
-
-    }
+    public RotAnimController(){}
 
     public RotAnimController(RotationAnimation [] animations){
         this.animations = animations;
@@ -16,7 +14,7 @@ public class RotAnimController extends AnimationController <RotationAnimation>{
     }
 
     public float getStartAngle(){
-        return animations[index].getStartAngle();
+        return animations[index].startAngle;
     }
 
     public float getAngle(){
@@ -24,13 +22,11 @@ public class RotAnimController extends AnimationController <RotationAnimation>{
     }
 
     public RotationAnimation.TransitionType getTransitionType(){
-        return animations[index].getTransitionType();
+        return animations[index].transitionType;
     }
 
     public void rotate(){
         restart();
     }
-
-
 
 }

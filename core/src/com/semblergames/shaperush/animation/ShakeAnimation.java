@@ -14,16 +14,15 @@ public class ShakeAnimation extends Animation{
     TransitionType transitionType = TransitionType.CONSTANT;
 
     public ShakeAnimation(float linearIntensity, float angularIntensity, float duration) {
+        super(duration);
         this.linearIntensity = linearIntensity;
         this.angularIntensity = angularIntensity;
-        this.duration = duration;
     }
 
     public ShakeAnimation(float linearIntensity, float angularIntensity, float duration, TransitionType transitionType, PlayMode playMode) {
+        super(duration,playMode);
         this.linearIntensity = linearIntensity;
         this.angularIntensity = angularIntensity;
-        this.duration = duration;
-        this.transitionType = transitionType;
         if(playMode == PlayMode.LOOP_PINGPONG || playMode == PlayMode.LOOP_REVERSED || playMode == PlayMode.REVERSED){
             this.playMode = PlayMode.NORMAL;
         }else{
@@ -63,7 +62,7 @@ public class ShakeAnimation extends Animation{
 
         return offset;
     }
-/*
+
     @Override
     public void setPlayMode(PlayMode playMode){
         if(playMode == PlayMode.LOOP_PINGPONG || playMode == PlayMode.LOOP_REVERSED || playMode == PlayMode.REVERSED){
@@ -71,10 +70,6 @@ public class ShakeAnimation extends Animation{
         }else{
             this.playMode = playMode;
         }
-    }
-*/
-    public void setDuration(float duration){
-        this.duration = duration;
     }
 
     public void setLinearIntensity(float linearIntensity) {

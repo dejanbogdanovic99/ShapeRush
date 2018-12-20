@@ -13,7 +13,7 @@ public abstract class Game implements ApplicationListener {
     private HashMap<Integer,Screen> screens;
 
     protected int currentID;
-    private Screen currentScreen;
+    protected Screen currentScreen;
 
 
     public Game(){

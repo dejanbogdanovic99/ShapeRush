@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.semblergames.shaperush.animation.Animation;
@@ -23,7 +24,6 @@ import com.semblergames.shaperush.animation.SclAnimController;
 import com.semblergames.shaperush.animation.ShakeAnimation;
 import com.semblergames.shaperush.animation.ShkAnimController;
 import com.semblergames.shaperush.game.Gate;
-import com.semblergames.shaperush.animation.AnimationController;
 import com.semblergames.shaperush.utils.SoundController;
 import com.semblergames.shaperush.utils.graphics.ColorShader;
 
@@ -69,18 +69,19 @@ public class LoadingScreen extends Screen{
     Button b;
     @Override
     public void initialize() {
-        c1 = new Color(Color.WHITE);
+        c1 = new Color(Color.ROYAL);
         c2 = new Color(Color.MAROON);
         c3 = new Color(Color.NAVY);
         colorShader.loadColors(c1,c2,c3);
 
         t1 = new Texture[3];
         t2 = new Texture[2];
-        t1[0] = new Texture("triangle.png");
+        t1[0] = new Texture("spin.png");
         t1[1] = new Texture("gcircle.png");
         t1[2] = new Texture("rsquare.png");
         t2[0] = new Texture("triangle.png");
         t2[1] = new Texture("triangle1.png");
+
 
 
         an = new FrameAnimation[2];
@@ -89,28 +90,30 @@ public class LoadingScreen extends Screen{
 
         final RotationAnimation [] rot = new RotationAnimation[1];
 
-        rot[0] = new RotationAnimation(0,360,1,RotationAnimation.TransitionType.SIN, Animation.PlayMode.LOOP_PINGPONG);
-
+        rot[0] = new RotationAnimation(0,-360,0.96f,RotationAnimation.TransitionType.LINEAR, Animation.PlayMode.LOOP);
 
         rotAnimController = new RotAnimController(rot);
 
         final ScaleAnimation [] scl = new ScaleAnimation[1];
 
-        scl[0] = new ScaleAnimation(0.5f,1.5f,3,ScaleAnimation.TransitionType.LINEAR, Animation.PlayMode.LOOP);
+        scl[0] = new ScaleAnimation(0.9f,1f,0.48f,ScaleAnimation.TransitionType.LINEAR, Animation.PlayMode.LOOP_PINGPONG);
 
         sclAnimController = new SclAnimController(scl);
 
 
         final ShakeAnimation [] shk = new ShakeAnimation[1];
 
-        shk[0] = new ShakeAnimation(3,10,1, ShakeAnimation.TransitionType.PEAK, Animation.PlayMode.NORMAL);
+        shk[0] = new ShakeAnimation(3,10,1, ShakeAnimation.TransitionType.PEAK, Animation.PlayMode.LOOP);
 
         shkAnimController = new ShkAnimController(shk);
 
 
         animationController = new FrameAnimController<Texture>();
         animationController.setAnimations(an);
-        animationController.start();
+
+        rotAnimController.start();
+
+        sclAnimController.start();
 
         so = new Sound[2];
         so[0] = Gdx.audio.newSound(Gdx.files.internal("die.wav"));

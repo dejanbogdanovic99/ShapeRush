@@ -6,16 +6,15 @@ public class FrameAnimation <T> extends Animation{
     float frameDuration;
 
     public FrameAnimation(float frameDuration, T[] keyFrames) {
+        super(frameDuration * keyFrames.length);
         this.frameDuration = frameDuration;
         this.keyFrames = keyFrames;
-        this.duration = frameDuration * keyFrames.length;
     }
 
     public FrameAnimation(float frameDuration, T[] keyFrames, PlayMode playMode){
+        super(frameDuration * keyFrames.length, playMode);
         this.frameDuration = frameDuration;
         this.keyFrames = keyFrames;
-        this.duration = frameDuration * keyFrames.length;
-        this.playMode = playMode;
     }
 
     public float getFrameDuration() {
@@ -55,6 +54,12 @@ public class FrameAnimation <T> extends Animation{
         }
 
         return frameNumber;
+    }
+
+    @Override
+    public void setDuration(float duration) {
+        super.setDuration(duration);
+        frameDuration = duration / keyFrames.length;
     }
 
     public void setFrameDuration(float frameDuration) {

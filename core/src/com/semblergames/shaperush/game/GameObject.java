@@ -8,28 +8,33 @@ import com.semblergames.shaperush.utils.SoundController;
 
 public abstract class GameObject implements Pool.Poolable {
 
-    protected FrameAnimController<TextureRegion> animations;
+    FrameAnimController<TextureRegion> animations;
 
-    protected SoundController sounds;
+    SoundController sounds;
 
-    protected float x;
+    float x;
 
-    protected float y;
+    float y;
 
-    protected float width;
+    float width;
 
-    protected float height;
+    float height;
 
-    protected int lane;
+    int lane;
 
-    protected float yOffsetReaction;
+    float yOffsetReaction;
+
+    @Override
+    public void reset() {
+
+    }
 
     public void draw(SpriteBatch batch){
 
         batch.draw(
                 animations.getKeyFrame(),
-                x,
-                y,
+                x - width/2,
+                y - height/2,
                 width, height
         );
 

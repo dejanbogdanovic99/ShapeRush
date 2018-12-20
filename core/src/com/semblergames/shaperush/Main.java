@@ -12,6 +12,7 @@ import com.semblergames.shaperush.utils.graphics.ColorShader;
 public class Main extends Game {
 
 	public enum ScreenIDs{
+
 		LoadingScreen(0),MainMenuScreen(1);
 
 		private int id;

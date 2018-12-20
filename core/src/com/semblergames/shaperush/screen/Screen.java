@@ -12,20 +12,20 @@ import com.semblergames.shaperush.Game;
 public abstract class Screen {
 
     /** Background color of the screen */
-    Color bgColor;
+   protected Color bgColor;
 
     /** Input handler for the the screen */
-    InputMultiplexer input;
+    protected InputMultiplexer input;
 
     /** Batch
      *  Should be taken from {@link Game}
      */
-    SpriteBatch batch;
+    protected SpriteBatch batch;
 
     /** Assets
      * Should be taken from {@link Game}
      */
-    AssetManager manager;
+    protected AssetManager manager;
 
     /** Constructor with {@link Color} WHITE background
      * @param batch taken from {@link Game}

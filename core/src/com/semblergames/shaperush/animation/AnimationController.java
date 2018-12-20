@@ -8,8 +8,7 @@ public abstract class AnimationController<T extends Animation>{
     int index;
     float time;
 
-    public AnimationController(){
-    }
+    public AnimationController(){}
 
     public AnimationController(T [] animations){
         this.animations = animations;
@@ -22,24 +21,24 @@ public abstract class AnimationController<T extends Animation>{
     public void update(float delta){
         if(running){
             time += delta;
-            switch(animations[index].getPlayMode()){
+            switch(animations[index].playMode){
                 case NORMAL:
                 case REVERSED: {
-                    if (time > animations[index].getDuration()) {
+                    if (time > animations[index].duration) {
                         running = false;
                     }
                     break;
                 }
                 case LOOP:
                 case LOOP_REVERSED: {
-                    float duration = animations[index].getDuration();
+                    float duration = animations[index].duration;
                     if(time > duration){
                         time -= duration;
                     }
                     break;
                 }
                 case LOOP_PINGPONG: {
-                    float duration2 = animations[index].getDuration()*2;
+                    float duration2 = animations[index].duration*2;
                     if(time > duration2){
                         time -= duration2;
                     }
@@ -76,15 +75,33 @@ public abstract class AnimationController<T extends Animation>{
     }
 
     public float getDuration(){
-        return animations[index].getDuration();
+        return animations[index].duration;
     }
 
     public Animation.PlayMode getPlayMode(){
-        return animations[index].getPlayMode();
+        return animations[index].playMode;
     }
 
     public void changeAnimation(int index){
         this.index = index;
+        time = 0;
+        running = false;
+    }
+
+    public void nextAnimation(){
+        index++;
+        if(index == animations.length){
+            index = 0;
+        }
+        time = 0;
+        running = false;
+    }
+
+    public void previousAnimation(){
+        index--;
+        if(index == -1){
+            index = animations.length-1;
+        }
         time = 0;
         running = false;
     }

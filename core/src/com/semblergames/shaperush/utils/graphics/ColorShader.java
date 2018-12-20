@@ -6,6 +6,11 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class ColorShader implements Disposable {
 
+
+    public enum StandardColors{
+        RED,GREEN,BLUE
+    }
+
     private ShaderProgram program;
 
     private int cr;
@@ -34,6 +39,12 @@ public class ColorShader implements Disposable {
         program.setUniformf(this.cg,cg.a,cg.g,cg.b);
         program.setUniformf(this.cb,cb.a,cb.g,cb.b);
         program.end();
+    }
+
+    public void loadInGame(Color cr,Color cb,Color cg){
+        program.setUniformf(this.cr,cr.a,cr.g,cr.b);
+        program.setUniformf(this.cg,cg.a,cg.g,cg.b);
+        program.setUniformf(this.cb,cb.a,cb.g,cb.b);
     }
 
     private void getUniformLocations(){

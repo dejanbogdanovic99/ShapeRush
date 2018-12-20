@@ -10,27 +10,26 @@ public class ScaleAnimation extends Animation{
     }
     
     float startScale;
-    float endScale;
+    float scale;
     TransitionType transitionType = TransitionType.LINEAR;
 
 
     public ScaleAnimation(float startScale, float endScale, float duration) {
+        super(duration);
         this.startScale = startScale;
-        this.endScale = endScale;
-        this.duration = duration;
+        this.scale = endScale - startScale;
     }
 
     public ScaleAnimation(float startScale, float endScale, float duration, TransitionType transitionType, PlayMode playMode) {
+        super(duration, playMode);
         this.startScale = startScale;
-        this.endScale = endScale;
-        this.duration = duration;
+        this.scale = endScale - startScale;
         this.transitionType = transitionType;
-        this.playMode = playMode;
     }
 
     public float getScale(float stateTime){
         
-        if(startScale == endScale){
+        if(scale == 0){
             return startScale;
         }
         
@@ -40,21 +39,21 @@ public class ScaleAnimation extends Animation{
             case NORMAL: {
                 if (stateTime < duration) {
                     if (transitionType == TransitionType.LINEAR) {
-                        scale = startScale + (endScale - startScale) * stateTime / duration;
+                        scale += this.scale * stateTime / duration;
                     } else if (transitionType == TransitionType.SIN) {
-                        scale = startScale + (endScale - startScale) * (1 + MathUtils.sinDeg(-90 + 180 * stateTime / duration)) / 2;
+                        scale += this.scale * (1 + MathUtils.sinDeg(-90 + 180 * stateTime / duration)) / 2;
                     }
                 } else {
-                    scale = endScale;
+                    scale += this.scale;
                 }
                 break;
             }
             case REVERSED: {
                 if (stateTime < duration) {
                     if (transitionType == TransitionType.LINEAR) {
-                        scale = startScale + (endScale - startScale) * (duration - stateTime) / duration;
+                        scale += this.scale * (duration - stateTime) / duration;
                     } else if (transitionType == TransitionType.SIN) {
-                        scale = startScale +(endScale - startScale) * (1 + MathUtils.sinDeg(-90 + 180 * (duration - stateTime) / duration)) / 2;
+                        scale += this.scale * (1 + MathUtils.sinDeg(-90 + 180 * (duration - stateTime) / duration)) / 2;
                     }
                 } else {
                     scale = startScale;
@@ -65,9 +64,9 @@ public class ScaleAnimation extends Animation{
                 stateTime = stateTime % duration;
 
                 if (transitionType == TransitionType.LINEAR) {
-                    scale = startScale + (endScale - startScale) * stateTime / duration;
+                    scale += this.scale * stateTime / duration;
                 } else if (transitionType == TransitionType.SIN) {
-                    scale = startScale + (endScale - startScale) * (1 + MathUtils.sinDeg(-90 + 180 * stateTime / duration)) / 2;
+                    scale += this.scale * (1 + MathUtils.sinDeg(-90 + 180 * stateTime / duration)) / 2;
                 }
                 break;
             }
@@ -75,22 +74,31 @@ public class ScaleAnimation extends Animation{
             case LOOP_REVERSED: {
                 stateTime = stateTime % duration;
 
-
                 if (transitionType == TransitionType.LINEAR) {
-                    scale = startScale + (endScale - startScale) * (duration - stateTime) / duration;
+                    scale += this.scale * (duration - stateTime) / duration;
                 } else if (transitionType == TransitionType.SIN) {
-                    scale = startScale + (endScale - startScale) * (1 + MathUtils.sinDeg(-90 + 180 * (duration - stateTime) / duration)) / 2;
+                    scale += this.scale * (1 + MathUtils.sinDeg(-90 + 180 * (duration - stateTime) / duration)) / 2;
                 }
                 break;
             }
             case LOOP_PINGPONG: {
 
-                stateTime = stateTime % (duration*2);
+                final float duration2 = duration * 2;
+
+                stateTime = stateTime % duration2;
 
                 if (transitionType == TransitionType.LINEAR) {
-                    scale = startScale + (endScale - startScale) * (2*duration - stateTime) / duration;
+                    if(stateTime > duration) {
+                        scale += this.scale * (duration2 - stateTime) / duration;
+                    }else{
+                        scale += this.scale * stateTime / duration;
+                    }
                 } else if (transitionType == TransitionType.SIN) {
-                    scale = startScale + (endScale - startScale) * (1 + MathUtils.sinDeg(-90 + 180 * (2*duration - stateTime) / duration)) / 2;
+                    if(stateTime > duration) {
+                        scale += this.scale * (1 + MathUtils.sinDeg(-90 + 180 * (duration2 - stateTime) / duration)) / 2;
+                    }else{
+                        scale += this.scale * (1 + MathUtils.sinDeg(-90 + 180 * stateTime / duration)) / 2;
+                    }
                 }
                 break;
             }
@@ -99,20 +107,25 @@ public class ScaleAnimation extends Animation{
         return scale;
     }
 
-    public void setDuration(float duration){
-        this.duration = duration;
-    }
-
     public void setStartScale(float startScale) {
+        this.scale += (this.startScale - startScale);
         this.startScale = startScale;
     }
 
     public void setEndScale(float endScale) {
-        this.endScale = endScale;
+        this.scale = endScale - startScale;
     }
 
     public void setTransitionType(TransitionType transitionType) {
         this.transitionType = transitionType;
+    }
+
+    public TransitionType getTransitionType() {
+        return transitionType;
+    }
+
+    public float getTotalScale(){
+        return scale;
     }
 
     public float getStartScale() {
@@ -120,11 +133,7 @@ public class ScaleAnimation extends Animation{
     }
 
     public float getEndScale() {
-        return endScale;
-    }
-
-    public TransitionType getTransitionType() {
-        return transitionType;
+        return startScale + scale;
     }
 
 }
