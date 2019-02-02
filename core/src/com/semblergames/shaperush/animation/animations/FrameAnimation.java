@@ -1,17 +1,19 @@
-package com.semblergames.shaperush.animation;
+package com.semblergames.shaperush.animation.animations;
 
-public class FrameAnimation <T> extends Animation{
+import com.semblergames.shaperush.animation.Animation;
 
-    T[] keyFrames;
-    float frameDuration;
+public class FrameAnimation <T> extends Animation {
 
-    public FrameAnimation(float frameDuration, T[] keyFrames) {
+    private T[] keyFrames;
+    private float frameDuration;
+
+    public FrameAnimation(float frameDuration, T ... keyFrames) {
         super(frameDuration * keyFrames.length);
         this.frameDuration = frameDuration;
         this.keyFrames = keyFrames;
     }
 
-    public FrameAnimation(float frameDuration, T[] keyFrames, PlayMode playMode){
+    public FrameAnimation(float frameDuration, PlayMode playMode, T ... keyFrames){
         super(frameDuration * keyFrames.length, playMode);
         this.frameDuration = frameDuration;
         this.keyFrames = keyFrames;

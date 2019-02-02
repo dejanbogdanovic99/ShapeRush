@@ -1,8 +1,7 @@
-package com.semblergames.shaperush;
+package com.semblergames.shaperush.utils;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.semblergames.shaperush.screen.Screen;
 
 import java.util.HashMap;
 
@@ -44,9 +43,11 @@ public abstract class Game implements ApplicationListener {
      * @param ID screen's ID to be set
      */
 
-    protected void setScreen(int ID){
+    protected void setInitialScreen(int ID){
         this.currentID = ID;
         this.currentScreen = screens.get(ID);
+        this.currentScreen.prepare();
+        this.currentScreen.show();
     }
 
 

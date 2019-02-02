@@ -1,60 +1,43 @@
-package com.semblergames.shaperush.screen;
+package com.semblergames.shaperush.utils;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.semblergames.shaperush.Game;
 
 public abstract class Screen {
 
-    /** Background color of the screen */
-   protected Color bgColor;
+     /** Background color of the screen */
+    protected Color bgColor;
 
     /** Input handler for the the screen */
     protected InputMultiplexer input;
 
-    /** Batch
-     *  Should be taken from {@link Game}
-     */
-    protected SpriteBatch batch;
-
-    /** Assets
-     * Should be taken from {@link Game}
-     */
-    protected AssetManager manager;
 
     /** Constructor with {@link Color} WHITE background
-     * @param batch taken from {@link Game}
-     * @param manager taken from {@link Game}
      */
 
-    public Screen(SpriteBatch batch, AssetManager manager){
-        this(batch,manager, Color.WHITE);
+    public Screen(){
+        this(Color.WHITE);
     }
 
-    public Screen(SpriteBatch batch, AssetManager manager ,Color bgColor){
+    public Screen(Color bgColor){
 
         this.bgColor = new Color(bgColor);
         this.input = new InputMultiplexer();
-        this.batch = batch;
-        this.manager = manager;
     }
 
     /** Requests {@link Screen} with following ID
      * @param ID next screen's ID
      */
 
-    public final void requestScreen(int ID){
+    protected final void requestScreen(int ID){
         ((Game)Gdx.app.getApplicationListener()).requestScreen(ID);
     }
 
     /** Initializer */
-
-    protected abstract void initialize();
+    public abstract void create();
 
     /** Called immediately before the screen becomes current for a {@link Game} */
     public void show(){

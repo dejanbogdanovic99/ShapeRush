@@ -3,41 +3,76 @@ package com.semblergames.shaperush.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
-import com.semblergames.shaperush.animation.FrameAnimController;
-import com.semblergames.shaperush.utils.SoundController;
+import com.semblergames.shaperush.animation.controllers.FrameAnimationController;
+import com.semblergames.shaperush.game.utils.AnimationSet;
+import com.semblergames.shaperush.utils.graphics.ColorShader;
 
 public abstract class GameObject implements Pool.Poolable {
 
-    FrameAnimController<TextureRegion> animations;
+    protected FrameAnimationController<TextureRegion> animation;
 
-    SoundController sounds;
+    protected float x;
 
-    float x;
+    protected float y;
 
-    float y;
+    protected float halfWidth;
 
-    float width;
+    protected float halfHeight;
 
-    float height;
+    protected float yOffsetReaction;
 
-    int lane;
+    protected int colorIndex;
 
-    float yOffsetReaction;
+    public GameObject(AnimationSet animationSet){
+        this.animation = new FrameAnimationController<TextureRegion>(animationSet.getFrameAnimations());
+        halfWidth = 0.5f;
+        halfHeight = 0.5f;
+        colorIndex = 0;
+    }
 
     @Override
     public void reset() {
+        animation.reset();
+    }
 
+    public void update(float delta){
+        animation.update(delta);
     }
 
     public void draw(SpriteBatch batch){
 
+        batch.setColor(ColorShader.color_indexes[colorIndex]);
+
         batch.draw(
-                animations.getKeyFrame(),
-                x - width/2,
-                y - height/2,
-                width, height
+                animation.getKeyFrame(),
+                x - halfWidth,
+                y - halfHeight,
+                halfWidth*2, halfHeight*2
         );
 
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getWidth() {
+        return halfWidth*2;
+    }
+
+    public float getHeight() {
+        return halfHeight*2;
+    }
+
+    public float getyOffsetReaction() {
+        return yOffsetReaction;
+    }
+
+    public int getColorIndex() {
+        return colorIndex;
+    }
 }

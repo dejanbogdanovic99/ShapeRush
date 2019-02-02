@@ -1,11 +1,12 @@
-package com.semblergames.shaperush.animation;
+package com.semblergames.shaperush.animation.controllers;
 
-public class ShkAnimController extends AnimationController<ShakeAnimation>{
+import com.semblergames.shaperush.animation.AnimationController;
+import com.semblergames.shaperush.animation.animations.ShakeAnimation;
 
-    public ShkAnimController() {}
+public class ShakeAnimationController extends AnimationController<ShakeAnimation> {
 
-    public ShkAnimController(ShakeAnimation[] animations) {
-        this.animations = animations;
+    public ShakeAnimationController(ShakeAnimation[] animations) {
+        super(animations);
     }
 
     public float getOffsetX(){
@@ -33,15 +34,15 @@ public class ShkAnimController extends AnimationController<ShakeAnimation>{
     }
 
     public float getLinearIntensity(){
-        return this.animations[index].linearIntensity;
+        return this.animations[index].getLinearIntensity();
     }
 
     public float getAngularIntensity(){
-        return this.animations[index].angularIntensity;
+        return this.animations[index].getAngularIntensity();
     }
 
     public ShakeAnimation.TransitionType getTransitionType(){
-        return animations[index].transitionType;
+        return animations[index].getTransitionType();
     }
 
     public void shake(){
@@ -50,24 +51,24 @@ public class ShkAnimController extends AnimationController<ShakeAnimation>{
 
     @Deprecated
     public void shake(float time){
-        animations[index].duration = time;
+        animations[index].setDuration(time);
         restart();
     }
 
     @Deprecated
     public void shake(float time,float linearIntensity, float angularIntensity){
-        animations[index].duration = time;
-        animations[index].linearIntensity = linearIntensity;
-        animations[index].angularIntensity = angularIntensity;
+        animations[index].setDuration(time);
+        animations[index].setLinearIntensity(linearIntensity);
+        animations[index].setAngularIntensity(angularIntensity);
         restart();
     }
 
     @Deprecated
     public void shake(float time, float linearIntensity, float angularIntensity, ShakeAnimation.TransitionType transitionType){
-        animations[index].duration = time;
-        animations[index].linearIntensity = linearIntensity;
-        animations[index].angularIntensity = angularIntensity;
-        animations[index].transitionType = transitionType;
+        animations[index].setDuration(time);
+        animations[index].setLinearIntensity(linearIntensity);
+        animations[index].setAngularIntensity(angularIntensity);
+        animations[index].setTransitionType(transitionType);
         restart();
     }
 

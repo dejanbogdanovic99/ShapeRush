@@ -11,8 +11,8 @@ public abstract class Animation {
 
     }
 
-    float duration;
-    PlayMode playMode = PlayMode.NORMAL;
+    protected float duration;
+    protected PlayMode playMode = PlayMode.NORMAL;
 
     public Animation(){}
 

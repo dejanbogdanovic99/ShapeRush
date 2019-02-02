@@ -1,31 +1,22 @@
 package com.semblergames.shaperush.screen;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.semblergames.shaperush.utils.graphics.ColorShader;
+
 
 /**
  * TODO resiti klasu
  */
-public class MainMenuScreen extends Screen {
+public class MainMenuScreen extends ShapeRushScreen {
 
-    private ColorShader colorShader;
 
-    public MainMenuScreen(ColorShader colorShader, SpriteBatch batch, AssetManager manager) {
-        super(batch, manager);
-        this.colorShader = colorShader;
+    public MainMenuScreen() {}
 
-    }
-
-    public MainMenuScreen(ColorShader colorShader,SpriteBatch batch, AssetManager manager, Color bgColor) {
-        super(batch, manager, bgColor);
-        this.colorShader = colorShader;
+    public MainMenuScreen(Color bgColor) {
+        super(bgColor);
     }
 
     @Override
-    public void initialize() {
+    public void create() {
     }
 
     @Override

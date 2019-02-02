@@ -1,17 +1,18 @@
-package com.semblergames.shaperush.animation;
+package com.semblergames.shaperush.animation.animations;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.semblergames.shaperush.animation.Animation;
 
-public class ShakeAnimation extends Animation{
+public class ShakeAnimation extends Animation {
 
     public enum TransitionType{
         CONSTANT,
         PEAK
     }
 
-    float linearIntensity;
-    float angularIntensity;
-    TransitionType transitionType = TransitionType.CONSTANT;
+    private float linearIntensity;
+    private float angularIntensity;
+    private TransitionType transitionType = TransitionType.CONSTANT;
 
     public ShakeAnimation(float linearIntensity, float angularIntensity, float duration) {
         super(duration);

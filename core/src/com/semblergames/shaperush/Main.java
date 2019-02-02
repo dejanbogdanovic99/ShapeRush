@@ -7,13 +7,15 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.semblergames.shaperush.screen.LoadingScreen;
 import com.semblergames.shaperush.screen.MainMenuScreen;
+import com.semblergames.shaperush.screen.PlayScreen;
+import com.semblergames.shaperush.utils.Game;
 import com.semblergames.shaperush.utils.graphics.ColorShader;
 
 public class Main extends Game {
 
 	public enum ScreenIDs{
 
-		LoadingScreen(0),MainMenuScreen(1);
+		LoadingScreen(0),MainMenuScreen(1),PlayScreen(2);
 
 		private int id;
 
@@ -47,18 +49,24 @@ public class Main extends Game {
 	public void create () {
 
 		manager = new AssetManager();
-
-		batch = new SpriteBatch();
-
 		colorShader = new ColorShader();
+		batch = new SpriteBatch(1000);
 
-		LoadingScreen loadingScreen = new LoadingScreen(colorShader,batch,manager, Color.BLACK);
-		loadingScreen.initialize();
+
+		LoadingScreen loadingScreen = new LoadingScreen(Color.BLACK);
+		loadingScreen.create();
 		addScreen(loadingScreen, ScreenIDs.LoadingScreen.getID());
 
-		MainMenuScreen mainMenuScreen = new MainMenuScreen(colorShader, batch,manager);
-		mainMenuScreen.initialize();
+		MainMenuScreen mainMenuScreen = new MainMenuScreen();
+		mainMenuScreen.create();
 		addScreen(mainMenuScreen, ScreenIDs.MainMenuScreen.getID());
+
+		PlayScreen playScreen = new PlayScreen();
+		playScreen.create();
+		addScreen(playScreen, ScreenIDs.PlayScreen.getID());
+
+
+		setInitialScreen(ScreenIDs.PlayScreen.getID());
 	}
 
 	//TODO skloniti kad ne bude trebalo
@@ -76,7 +84,7 @@ public class Main extends Game {
 
 		getScreen(ScreenIDs.LoadingScreen.getID()).dispose();
 		getScreen(ScreenIDs.MainMenuScreen.getID()).dispose();
-
+		getScreen(ScreenIDs.PlayScreen.getID()).dispose();
 
 		colorShader.dispose();
 		batch.dispose();
@@ -85,5 +93,16 @@ public class Main extends Game {
 		super.dispose();
 	}
 
+	public AssetManager getManager(){
+		return manager;
+	}
+
+	public SpriteBatch getBatch(){
+		return batch;
+	}
+
+	public ColorShader getColorShader(){
+		return colorShader;
+	}
 
 }
