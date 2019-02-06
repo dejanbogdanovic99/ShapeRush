@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.semblergames.shaperush.screen.LoadingScreen;
 import com.semblergames.shaperush.screen.MainMenuScreen;
 import com.semblergames.shaperush.screen.PlayScreen;
@@ -36,6 +37,7 @@ public class Main extends Game {
 	private ColorShader colorShader;
 
 
+
 	/**
 	 * TODO napraviti prelaz
 	 */
@@ -53,6 +55,8 @@ public class Main extends Game {
 		colorShader = new ColorShader();
 		batch = new SpriteBatch(1000);
 
+		BitmapFont fonr = new BitmapFont();
+		fonr.dispose();
 
 		LoadingScreen loadingScreen = new LoadingScreen(Color.BLACK);
 		loadingScreen.create();
