@@ -69,6 +69,11 @@ public class CSChange extends GameObject {
         animation.update(delta);
         rotation.update(delta);
         scale.update(delta);
+        if(rotation.isHalfFinished()){
+            animation.changeAnimation(toShape.getValue());
+        }else{
+            animation.changeAnimation(toShape.getValue()+1);
+        }
     }
 
     @Override
@@ -103,8 +108,8 @@ public class CSChange extends GameObject {
     public static AnimationSet createCSChangeAnimationSet(AssetManager manager){
         AnimationSet animationSet = new AnimationSet();
 
-        TransitionAnimation rotation = new TransitionAnimation(0,360, 0.96f, TransitionAnimation.TransitionType.LINEAR, Animation.PlayMode.LOOP);
-        TransitionAnimation scale = new TransitionAnimation(1,1.2f,0.48f, TransitionAnimation.TransitionType.LINEAR, Animation.PlayMode.LOOP_PINGPONG);
+        TransitionAnimation rotation = new TransitionAnimation(0,1080, 2f, TransitionAnimation.TransitionType.SIN, Animation.PlayMode.LOOP);
+        TransitionAnimation scale = new TransitionAnimation(1,1,0.48f, TransitionAnimation.TransitionType.LINEAR, Animation.PlayMode.LOOP_PINGPONG);
 
 
         FrameAnimation<TextureRegion> squareShape = new FrameAnimation<TextureRegion>(0.2f,new TextureRegion((Texture)manager.get("rsquare.png")));

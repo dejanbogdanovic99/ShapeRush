@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.semblergames.shaperush.screen.LoadingScreen;
 import com.semblergames.shaperush.screen.MainMenuScreen;
 import com.semblergames.shaperush.screen.PlayScreen;
@@ -66,7 +67,7 @@ public class Main extends Game {
 		addScreen(playScreen, ScreenIDs.PlayScreen.getID());
 
 
-		setInitialScreen(ScreenIDs.PlayScreen.getID());
+		setScreen(ScreenIDs.PlayScreen.getID());
 	}
 
 	//TODO skloniti kad ne bude trebalo

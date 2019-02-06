@@ -41,6 +41,14 @@ public abstract class Animation {
         }
     }
 
+    public boolean isHalfFinished(float stateTime){
+        if(playMode == PlayMode.LOOP_PINGPONG){
+            return stateTime > duration;
+        }else{
+            return stateTime > duration/2;
+        }
+    }
+
     public float getDuration() {
         return duration;
     }

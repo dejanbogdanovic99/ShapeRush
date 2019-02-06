@@ -62,7 +62,7 @@ public class PlayScreen extends ShapeRushScreen implements InputProcessor {
         AnimationSet animationSet = CSChange.createCSChangeAnimationSet(getManager());
 
         change = new CSChange(animationSet);
-        change.set(Types.Color.SPECIAL,Types.Shape.SPECIAL, 4,5);
+        change.set(Types.Color.RED,Types.Shape.SQUARE, 4,5);
 
         shape = new RushingShape(animationSet);
         shape.set(Types.Color.RED,Types.Shape.CIRCLE,3,3,2);

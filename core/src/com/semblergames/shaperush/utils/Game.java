@@ -2,14 +2,12 @@ package com.semblergames.shaperush.utils;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.HashMap;
 
 public abstract class Game implements ApplicationListener {
-
-    private static final int NULL_ID = 0xffffffff;
-
-    private HashMap<Integer,Screen> screens;
+    protected HashMap<Integer,Screen> screens;
 
     protected int currentID;
     protected Screen currentScreen;
@@ -17,19 +15,14 @@ public abstract class Game implements ApplicationListener {
 
     public Game(){
         screens = new HashMap<Integer, Screen>();
-        currentID = NULL_ID;
-
     }
 
     protected boolean addScreen(Screen screen, int ID){
         if(screens.containsKey(ID)){
             return false;
         }
-        if(currentID == NULL_ID){
-            currentScreen = screen;
-            currentID = ID;
-            currentScreen.show();
-        }
+        currentID = ID;
+        currentScreen = screen;
         screens.put(ID,screen);
         return true;
     }
@@ -38,16 +31,18 @@ public abstract class Game implements ApplicationListener {
         return screens.get(ID);
     }
 
-
     /** Sets the current screen
      * @param ID screen's ID to be set
      */
 
-    protected void setInitialScreen(int ID){
-        this.currentID = ID;
-        this.currentScreen = screens.get(ID);
-        this.currentScreen.prepare();
-        this.currentScreen.show();
+    protected void setScreen(int ID){
+        if(currentScreen != null){
+            currentScreen.hide();
+        }
+        currentID = ID;
+        currentScreen = screens.get(ID);
+        currentScreen.prepare();
+        currentScreen.show();
     }
 
 

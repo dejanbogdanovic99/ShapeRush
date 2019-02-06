@@ -8,25 +8,11 @@ import com.badlogic.gdx.graphics.GL20;
 
 public abstract class Screen {
 
-     /** Background color of the screen */
-    protected Color bgColor;
-
-    /** Input handler for the the screen */
-    protected InputMultiplexer input;
-
-
-    /** Constructor with {@link Color} WHITE background
+    /** Constructor
      */
 
-    public Screen(){
-        this(Color.WHITE);
-    }
+    public Screen(){ }
 
-    public Screen(Color bgColor){
-
-        this.bgColor = new Color(bgColor);
-        this.input = new InputMultiplexer();
-    }
 
     /** Requests {@link Screen} with following ID
      * @param ID next screen's ID
@@ -36,13 +22,11 @@ public abstract class Screen {
         ((Game)Gdx.app.getApplicationListener()).requestScreen(ID);
     }
 
-    /** Initializer */
+    /** Creation of the screen, this is where you should initialize textures and stuff that is disposed of in {@link #dispose()} */
     public abstract void create();
 
     /** Called immediately before the screen becomes current for a {@link Game} */
-    public void show(){
-        Gdx.input.setInputProcessor(input);
-    }
+    public void show(){}
 
     /** Called when screen should prepare before becoming current */
     public void prepare(){}
@@ -54,10 +38,7 @@ public abstract class Screen {
     public void resize(int width, int height){}
 
     /** Called for rendering */
-    public void render(){
-        Gdx.gl.glClearColor(bgColor.r,bgColor.g,bgColor.b,bgColor.a);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
+    public void render(){}
 
     /** Called for updating */
     public void update(float delta){}

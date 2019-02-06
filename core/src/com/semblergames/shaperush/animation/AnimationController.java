@@ -81,6 +81,10 @@ public abstract class AnimationController<T extends Animation>{
         return animations[index].isFinished(time);
     }
 
+    public boolean isHalfFinished(){
+        return animations[index].isHalfFinished(time);
+    }
+
     public float getDuration(){
         return animations[index].getDuration();
     }
