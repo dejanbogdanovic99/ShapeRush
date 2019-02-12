@@ -9,8 +9,8 @@ precision mediump float;
 
 uniform sampler2D u_texture;
 uniform vec3 u_color[3];
-uniform int u_mode;
 
+varying float v_mode;
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
 
@@ -22,7 +22,7 @@ void main(void){
 
     vec4 color = texture2D(u_texture, v_texCoords);
 
-    if(u_mode == 1){
+    if(v_mode > 0.5){
 
       int r = int(v_color.r);
       int g = int(v_color.g);
@@ -44,19 +44,19 @@ void main(void){
 
 
 bool pure_red(vec4 color){
-    return ((color.r > 1-TRIGGER_OFFSET)
+    return ((color.r > 1.0-TRIGGER_OFFSET)
          && (color.g < TRIGGER_OFFSET)
          && (color.b < TRIGGER_OFFSET));
 }
 
 bool pure_green(vec4 color){
     return ((color.r < TRIGGER_OFFSET)
-         && (color.g > 1-TRIGGER_OFFSET)
+         && (color.g > 1.0-TRIGGER_OFFSET)
          && (color.b < TRIGGER_OFFSET));
 }
 
 bool pure_blue(vec4 color){
     return ((color.r < TRIGGER_OFFSET)
          && (color.g < TRIGGER_OFFSET)
-         && (color.b > 1-TRIGGER_OFFSET));
+         && (color.b > 1.0-TRIGGER_OFFSET));
 }
