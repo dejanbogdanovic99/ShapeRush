@@ -100,6 +100,7 @@ public class MainMenuScreen extends ShapeRushScreen {
         Button.ButtonStyle sExit = new Button.ButtonStyle();
         sExit.up = new TextureRegionDrawable(new TextureRegion(manager.get(descExit)));
         sExit.over = new TextureRegionDrawable(new TextureRegion(manager.get(descExitOver)));
+        sExit.down = sExit.over;
         bExit = new Button(sExit);
         bExit.setOrigin(Align.center);
         bExit.setPosition(width/2 + 180, 400, Align.center);
@@ -114,6 +115,7 @@ public class MainMenuScreen extends ShapeRushScreen {
         Button.ButtonStyle sNoads = new Button.ButtonStyle();
         sNoads.up = new TextureRegionDrawable(new TextureRegion(manager.get(descNoads)));
         sNoads.over = new TextureRegionDrawable(new TextureRegion(manager.get(descNoadsOver)));
+        sNoads.down = sNoads.over;
         bNoads = new Button(sNoads);
         bNoads.setOrigin(Align.center);
         bNoads.setPosition(width/2 + 90, 220, Align.center);
@@ -121,6 +123,7 @@ public class MainMenuScreen extends ShapeRushScreen {
         Button.ButtonStyle sPlay = new Button.ButtonStyle();
         sPlay.up = new TextureRegionDrawable(new TextureRegion(manager.get(descPlay)));
         sPlay.over = new TextureRegionDrawable(new TextureRegion(manager.get(descPlayOver)));
+        sPlay.down = sPlay.over;
         bPlay = new Button(sPlay);
         bPlay.setOrigin(Align.center);
         bPlay.setPosition(width/2 , 600, Align.center);
@@ -134,6 +137,7 @@ public class MainMenuScreen extends ShapeRushScreen {
         Button.ButtonStyle sLeadboard = new Button.ButtonStyle();
         sLeadboard.up = new TextureRegionDrawable(new TextureRegion(manager.get(descLeadboard)));
         sLeadboard.over = new TextureRegionDrawable(new TextureRegion(manager.get(descLeadboardOver)));
+        sLeadboard.down = sLeadboard.over;
         bLeadboard = new Button(sLeadboard);
         bLeadboard.setOrigin(Align.center);
         bLeadboard.setPosition(width/2 - 90, 220, Align.center);
@@ -141,6 +145,7 @@ public class MainMenuScreen extends ShapeRushScreen {
         Button.ButtonStyle sSettings = new Button.ButtonStyle();
         sSettings.up = new TextureRegionDrawable(new TextureRegion(manager.get(descSettings)));
         sSettings.over = new TextureRegionDrawable(new TextureRegion(manager.get(descSettingsOver)));
+        sSettings.down = sSettings.over;
         bSettings = new Button(sSettings);
         bSettings.setOrigin(Align.center);
         bSettings.setPosition(width/2 - 180, 400, Align.center);
@@ -154,6 +159,7 @@ public class MainMenuScreen extends ShapeRushScreen {
         Button.ButtonStyle sShop = new Button.ButtonStyle();
         sShop.up = new TextureRegionDrawable(new TextureRegion(manager.get(descShop)));
         sShop.over = new TextureRegionDrawable(new TextureRegion(manager.get(descShopOver)));
+        sShop.down = sShop.over;
         bShop = new Button(sShop);
         bShop.setOrigin(Align.center);
         bShop.setPosition(width/2, 400, Align.center);
