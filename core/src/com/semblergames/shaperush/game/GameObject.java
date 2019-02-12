@@ -1,53 +1,62 @@
 package com.semblergames.shaperush.game;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.NumberUtils;
 import com.badlogic.gdx.utils.Pool;
+import com.semblergames.shaperush.animation.AnimationController;
 import com.semblergames.shaperush.animation.controllers.FrameAnimationController;
 import com.semblergames.shaperush.game.utils.AnimationSet;
 import com.semblergames.shaperush.utils.graphics.ColorShader;
 
+
+
 public abstract class GameObject implements Pool.Poolable {
 
-    protected FrameAnimationController<TextureRegion> animation;
+    protected AnimationController<TextureRegion> controller;
 
     protected float x;
 
     protected float y;
 
-    protected float halfWidth;
+    protected float width;
 
-    protected float halfHeight;
+    protected float height;
 
     protected float yOffsetReaction;
 
     protected int colorIndex;
 
-    public GameObject(AnimationSet animationSet){
-        this.animation = new FrameAnimationController<TextureRegion>(animationSet.getFrameAnimations());
-        halfWidth = 0.5f;
-        halfHeight = 0.5f;
-        colorIndex = 0;
+    public GameObject(Animation<TextureRegion> [] animations){
+        controller = new AnimationController<TextureRegion>(animations);
+        colorIndex = ColorShader.rgb;
+        width = 1;
+        height = 1;
+        x = 0;
+        y = 0;
+        yOffsetReaction = 0.1f;
     }
+
 
     @Override
     public void reset() {
-        animation.reset();
+        controller.reset();
     }
 
     public void update(float delta){
-        animation.update(delta);
+        controller.update(delta);
     }
 
     public void draw(SpriteBatch batch){
 
-        batch.setColor(ColorShader.color_indexes[colorIndex]);
+        batch.setColor(NumberUtils.intBitsToFloat(ColorShader.colorIndexes[colorIndex]));
 
         batch.draw(
-                animation.getKeyFrame(),
-                x - halfWidth,
-                y - halfHeight,
-                halfWidth*2, halfHeight*2
+                controller.getKeyFrame(),
+                x - width/2,
+                y - height/2,
+                width, height
         );
 
     }
@@ -61,11 +70,11 @@ public abstract class GameObject implements Pool.Poolable {
     }
 
     public float getWidth() {
-        return halfWidth*2;
+        return width;
     }
 
     public float getHeight() {
-        return halfHeight*2;
+        return height;
     }
 
     public float getyOffsetReaction() {

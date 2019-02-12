@@ -1,45 +1,48 @@
 package com.semblergames.shaperush.animation;
 
-public abstract class AnimationController<T extends Animation>{
 
-    protected T [] animations;
+import com.badlogic.gdx.graphics.g2d.Animation;
+
+public class AnimationController <T>{
+
+    protected com.badlogic.gdx.graphics.g2d.Animation<T> [] animations;
 
     protected boolean running;
     protected int index;
     protected float time;
 
-    public AnimationController(T [] animations){
+    public AnimationController(com.badlogic.gdx.graphics.g2d.Animation<T>[] animations){
         this.animations = animations;
         running = true;
         index = 0;
         time = 0;
     }
 
-    public void setAnimations(T [] animations){
+    public void setAnimations(com.badlogic.gdx.graphics.g2d.Animation<T> [] animations){
         this.animations = animations;
     }
 
     public void update(float delta){
         if(running){
             time += delta;
-            switch(animations[index].playMode){
+            switch(animations[index].getPlayMode()){
                 case NORMAL:
                 case REVERSED: {
-                    if (time > animations[index].getDuration()) {
+                    if (time > animations[index].getAnimationDuration()) {
                         running = false;
                     }
                     break;
                 }
                 case LOOP:
                 case LOOP_REVERSED: {
-                    float duration = animations[index].getDuration();
+                    float duration = animations[index].getAnimationDuration();
                     if(time > duration){
                         time -= duration;
                     }
                     break;
                 }
                 case LOOP_PINGPONG: {
-                    float duration2 = animations[index].getDuration()*2;
+                    float duration2 = animations[index].getAnimationDuration()*2;
                     if(time > duration2){
                         time -= duration2;
                     }
@@ -78,19 +81,24 @@ public abstract class AnimationController<T extends Animation>{
     }
 
     public boolean isFinished(){
-        return animations[index].isFinished(time);
+        return animations[index].isAnimationFinished(time);
     }
 
-    public boolean isHalfFinished(){
-        return animations[index].isHalfFinished(time);
-    }
 
-    public float getDuration(){
-        return animations[index].getDuration();
+    public float getAnimationDuration(){
+        return animations[index].getAnimationDuration();
     }
 
     public Animation.PlayMode getPlayMode(){
         return animations[index].getPlayMode();
+    }
+
+    public T getKeyFrame(){
+        return animations[index].getKeyFrame(time);
+    }
+
+    public float getFrameDuration(){
+        return animations[index].getFrameDuration();
     }
 
     public boolean changeAnimation(int index){
@@ -103,14 +111,14 @@ public abstract class AnimationController<T extends Animation>{
 
     public void nextAnimation(){
         index++;
-        if(index == animations.length){
+        if(index >= animations.length){
             index = 0;
         }
     }
 
     public void previousAnimation(){
         index--;
-        if(index == -1){
+        if(index < 0){
             index = animations.length-1;
         }
     }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Pool;
 
 public class ObstacleGroup {
 
-    public static final int ROWS = 6;
+/*    public static final int ROWS = 6;
     public static final int COLUMNS = 5;
 
     private GameObject [][] obstacles;
@@ -63,6 +63,6 @@ public class ObstacleGroup {
                 obstacles[i][j].draw(batch);
             }
         }
-    }
+    }*/
 
 }

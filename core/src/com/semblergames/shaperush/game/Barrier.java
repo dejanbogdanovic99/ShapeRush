@@ -3,14 +3,14 @@ package com.semblergames.shaperush.game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.semblergames.shaperush.game.utils.AnimationSet;
 
-public class Barrier extends GameObject {
+public class Barrier {
 
 
     public Barrier(AnimationSet animationSet) {
-        super(animationSet);
+
     }
 
-    @Override
+
     public void reset() {
 
     }

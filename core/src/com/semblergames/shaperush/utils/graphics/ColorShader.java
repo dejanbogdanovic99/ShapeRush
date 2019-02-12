@@ -12,18 +12,27 @@ import java.nio.FloatBuffer;
 public class ColorShader extends ShaderProgram{
 
     private int color_location;
-    private int alpha_location;
+    private int mode_location;
 
     private FloatBuffer colorBuffer;
 
-    public static float [] color_indexes = {
-            NumberUtils.intBitsToFloat(0xfeff8000), //rgb
-            NumberUtils.intBitsToFloat(0xfe00ff80), //gbr
-            NumberUtils.intBitsToFloat(0xfe8000ff), //brg
-            NumberUtils.intBitsToFloat(0xfe80ff00), //rbg
-            NumberUtils.intBitsToFloat(0xfeff0080), //grb
-            NumberUtils.intBitsToFloat(0xfe0080ff)  //bgr
+    public static int colorIndexes[] = {
+            0xfeff8000,
+            0xfe00ff80,
+            0xfe8000ff,
+            0xfe80ff00,
+            0xfeff0080,
+            0xfe0080ff
     };
+
+    public static int rgb = 0;
+    public static int gbr = 1;
+    public static int brg = 2;
+    public static int rbg = 3;
+    public static int grb = 4;
+    public static int bgr = 5;
+
+
 
     public ColorShader(){
         super(Gdx.files.internal("shaders/colorVertex.glsl"),Gdx.files.internal("shaders/colorFragment.glsl"));
@@ -31,23 +40,23 @@ public class ColorShader extends ShaderProgram{
         if (!isCompiled()) throw new IllegalArgumentException("Error compiling shader: " + getLog());
 
         color_location = getUniformLocation("u_color[0]");
-        alpha_location = getUniformLocation("u_alpha");
+        mode_location = getUniformLocation("u_mode");
         
         colorBuffer = BufferUtils.newFloatBuffer(9);
 
         begin();
         reloadColorsOnLine();
-        loadAlphaOnLine(1);
+        loadModeOnLine(0);
         end();
     }
 
-    public void loadAlphaOnLine(float alpha){
-        Gdx.gl20.glUniform1f(alpha_location,alpha);
+    public void loadModeOnLine(int mode){
+        Gdx.gl20.glUniform1i(mode_location,mode);
     }
 
-    public void loadAlpha(float alpha){
+    public void loadMode(int mode){
         begin();
-        loadAlphaOnLine(alpha);
+        loadModeOnLine(mode);
         end();
     }
     
@@ -59,10 +68,25 @@ public class ColorShader extends ShaderProgram{
         colorBuffer.flip();
         Gdx.gl20.glUniform3fv(color_location,3,colorBuffer);
     }
+
+    public void loadColorsOnLine(float rr,float rg, float rb, float gr, float gg, float gb, float br, float bg, float bb){
+        colorBuffer.clear();
+        colorBuffer.put(rr).put(rg).put(rb).
+                put(gr).put(gg).put(gb).
+                put(br).put(bg).put(bb);
+        colorBuffer.flip();
+        Gdx.gl20.glUniform3fv(color_location,3,colorBuffer);
+    }
     
     public void loadColors(Color red, Color green, Color blue){
         begin();
         loadColorsOnLine(red,green,blue);
+        end();
+    }
+
+    public void loadColors(float rr,float rg, float rb, float gr, float gg, float gb, float br, float bg, float bb){
+        begin();
+        loadColorsOnLine(rr,rg,rb,gr,gg,gb,br,bg,bb);
         end();
     }
 

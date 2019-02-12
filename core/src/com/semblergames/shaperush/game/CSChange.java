@@ -12,15 +12,15 @@ import com.semblergames.shaperush.game.utils.AnimationSet;
 import com.semblergames.shaperush.game.utils.Types;
 import com.semblergames.shaperush.utils.graphics.ColorShader;
 
-public class CSChange extends GameObject {
+public class CSChange{
 
-    private TransitionAnimationController rotation;
+ /*   private TransitionAnimationController rotation;
     private TransitionAnimationController scale;
 
     private Types.Color toColor;
     private Types.Shape toShape;
 
-    public CSChange(AnimationSet animationSet){
+   public CSChange(AnimationSet animationSet){
         super(animationSet);
         yOffsetReaction = 0.25f;
         rotation = new TransitionAnimationController(animationSet.getRotationAnimations());
@@ -130,6 +130,6 @@ public class CSChange extends GameObject {
         manager.unload("rsquare.png");
 
         manager.unload("rtriangle.png");
-    }
+    }*/
 
 }

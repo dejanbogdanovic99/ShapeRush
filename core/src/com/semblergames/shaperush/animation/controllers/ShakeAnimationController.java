@@ -3,9 +3,9 @@ package com.semblergames.shaperush.animation.controllers;
 import com.semblergames.shaperush.animation.AnimationController;
 import com.semblergames.shaperush.animation.animations.ShakeAnimation;
 
-public class ShakeAnimationController extends AnimationController<ShakeAnimation> {
+public class ShakeAnimationController  {
 
-    public ShakeAnimationController(ShakeAnimation[] animations) {
+   /* public ShakeAnimationController(ShakeAnimation ... animations) {
         super(animations);
     }
 
@@ -70,6 +70,6 @@ public class ShakeAnimationController extends AnimationController<ShakeAnimation
         animations[index].setAngularIntensity(angularIntensity);
         animations[index].setTransitionType(transitionType);
         restart();
-    }
+    }*/
 
 }

@@ -4,9 +4,9 @@ import com.semblergames.shaperush.animation.Animation;
 import com.semblergames.shaperush.animation.AnimationController;
 import com.semblergames.shaperush.animation.animations.TransitionAnimation;
 
-public class TransitionAnimationController extends AnimationController <TransitionAnimation> {
+public class TransitionAnimationController{
 
-    public TransitionAnimationController(TransitionAnimation[] animations) {
+    /*public TransitionAnimationController(TransitionAnimation ... animations) {
         super(animations);
     }
 
@@ -24,6 +24,6 @@ public class TransitionAnimationController extends AnimationController <Transiti
 
     public TransitionAnimation.TransitionType getTransitionType(){
         return animations[index].getTransitionType();
-    }
+    }*/
 
 }

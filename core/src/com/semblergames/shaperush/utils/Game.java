@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.HashMap;
 
 public abstract class Game implements ApplicationListener {
+
     protected HashMap<Integer,Screen> screens;
 
     protected int currentID;
@@ -56,6 +57,7 @@ public abstract class Game implements ApplicationListener {
             currentScreen = screens.get(ID);
             currentScreen.prepare();
             currentScreen.show();
+            System.gc();
         }
     }
 

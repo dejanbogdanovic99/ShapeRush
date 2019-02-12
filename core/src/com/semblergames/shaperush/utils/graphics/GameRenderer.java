@@ -11,7 +11,7 @@ import com.semblergames.shaperush.game.RushingShape;
 
 public class GameRenderer {
 
-    private Array<CSChange> csChanges;
+   /* private Array<CSChange> csChanges;
     private Array<Gate> gates;
     private Array<Barrier> barriers;
 
@@ -59,6 +59,6 @@ public class GameRenderer {
             csChange.draw(batch);
         }
 
-    }
+    }*/
 
 }
